@@ -24,7 +24,7 @@ end
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   ratings = rating_list.split(', ')
   ratings.each do |rating|
-    step %{I #{uncheck}check "ratings_#{rating}"}
+    steps %{Then I #{uncheck}check "ratings_#{rating}"}
   end
 end
 
@@ -32,16 +32,15 @@ end
 Then /^I should (not )?see the following movies: (.*)$/ do |no, movie_list|
   movies = movie_list.split(', ')
   movies.each do |movie|
-    if no
-      page.should_not have_content(movie)
-    else
-      page.should have_content(movie)
-    end
+    steps %{Then I should #{no}see "#{movie}"}
   end
 end
 
 Then /I should see all the movies/ do
-  expect(page.all('#movies tbody tr').size).to eq(10)
+  movies = Movie.all
+  movies.each do |movie|
+    steps %Q{Then I should see "#{movie.title}"}
+  end
 end
 
 ### Utility Steps Just for this assignment.
