@@ -1,0 +1,13 @@
+<h2>Add New Movie</h2>
+
+<%= form_tag movies_path, class: 'form' do %>
+  <%= label :movie, :title, 'Title', class: 'col-form-label' %>
+  <%= text_field :movie, :title, value: @movie_details[:title], class: 'form-control' %>
+  <%= label :movie, :rating, 'Rating', class: 'col-form-label' %>
+  <%= select :movie, :rating, ['G', 'PG', 'PG-13', 'R'], selected: @movie_details[:rating], class: 'form-control col-1' %>
+  <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>
+  <%= text_field :movie, :release_date, value: @movie_details[:release_date], class: 'form-control col-2 d-inline' %>
+  <br/>
+  <%= submit_tag 'Save Changes', class: 'btn btn-primary' %>
+  <%= link_to 'Cancel', movies_path, class: 'btn btn-secondary' %>
+<% end %>
