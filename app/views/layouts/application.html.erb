@@ -7,11 +7,50 @@
     <%= stylesheet_link_tag 'application', 'media' => 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
+    <style>
+      /* Custom CSS styles */
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .logout-button {
+        background-color: white;
+        color: #007bff; /* Blue color, you can adjust it */
+        border: 1px solid #007bff;
+      }
+      .logout-button:hover {
+        background-color: #007bff;
+        color: white;
+      }
+      /* Style the username in title case */
+      .username {
+        text-transform: capitalize;
+      }
+    </style>
   </head>
   <body>
     <%# These classes come from the Bootstrap CSS framework. %>
     <nav class="navbar navbar-expand-lg bg-primary text-white mb-3">
       <h1 class="title">Rotten Potatoes!</h1>
+      <ul class="navbar-nav ml-auto">
+        <% if current_moviegoer %>
+          <li class="nav-item">
+            <%= image_tag(current_moviegoer.avatar_url, class: 'user-avatar') %>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">Welcome, <span class="username"><%= current_moviegoer.full_name %></span></span>
+          </li>
+          <li class="nav-item">
+            <%= button_to 'Logout', destroy_moviegoer_session_path, class: 'btn logout-button', data: { turbo: "false" }, method: :delete %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Login', new_moviegoer_session_path, class: 'nav-link' %>
+          </li>
+        <% end %>
+      </ul>
     </nav>
     <div class="container">
       <%# Render "flash" messages in our application. This loads _flash.erb %>
