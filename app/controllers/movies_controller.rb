@@ -26,6 +26,7 @@ class MoviesController < ApplicationController
     flash[:notice] = "#{@movie.title} was successfully created."
     redirect_to movies_path
   end
+  
 
   def edit
     @movie = Movie.find params[:id]
@@ -46,21 +47,40 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    @movie = params[:movie][:title]
-    inception_movie = {
-      title: "Inception",
-      rating: "PG-13",
-      release_date: "July 16, 2010"
-    }
-    if @movie != inception_movie[:title]
+    @query = params[:movie][:title] || params[:title]
+    @movie_results = TmdbService.search(@query)
+  
+    if @movie_results.blank?
       redirect_to movies_path
-      flash[:notice] = "'#{@movie}' was not found in TMDb."
+      flash[:notice] = "'#{@query}' was not found in TMDb."
     else
-      # Pass the movie details to the view
-      @movie_details = inception_movie
-      render 'search_tmdb'
+      if @movie_results.length == 1 || params[:selected]
+        first_movie = @movie_results.first
+        @movie_details = {
+          title: first_movie["title"],
+          rating: first_movie["vote_average"].to_s,
+          release_date: first_movie["release_date"],
+          overview: first_movie["overview"]
+        }
+        render 'search_tmdb'
+      else
+        render 'search_results'
+      end
     end
   end
+  
+  
+
+  def select_movie
+    @movie_details = {
+      title: params[:title],
+      rating: params[:rating],
+      release_date: params[:release_date],
+      overview: params[:overview]
+    }
+    render 'search_tmdb'
+  end  
+  
 
   private
 
@@ -84,6 +104,8 @@ class MoviesController < ApplicationController
     params[:sort_by] || session[:sort_by] || 'id'
   end
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :overview, :original_title, :vote_average)
   end
+  
+  
 end

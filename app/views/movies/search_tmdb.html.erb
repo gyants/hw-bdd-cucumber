@@ -1,12 +1,26 @@
 <h2>Add New Movie</h2>
 
 <%= form_tag movies_path, class: 'form' do %>
-  <%= label :movie, :title, 'Title', class: 'col-form-label' %>
-  <%= text_field :movie, :title, value: @movie_details[:title], class: 'form-control' %>
-  <%= label :movie, :rating, 'Rating', class: 'col-form-label' %>
-  <%= select :movie, :rating, ['G', 'PG', 'PG-13', 'R'], selected: @movie_details[:rating], class: 'form-control col-1' %>
-  <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>
-  <%= text_field :movie, :release_date, value: @movie_details[:release_date], class: 'form-control col-2 d-inline' %>
+  <div class="form-group">
+    <%= label :movie, :title, 'Title', class: 'col-form-label' %>
+    <%= text_field :movie, :title, value: @movie_details[:title], class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= label :movie, :rating, 'Rating', class: 'col-form-label' %>
+    <%= select :movie, :rating, ['G', 'PG', 'PG-13', 'R'], { selected: @movie_details[:rating] }, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>
+    <%= text_field :movie, :release_date, value: @movie_details[:release_date], class: 'form-control col-2 d-inline' %>
+  </div>
+  
+  <div class="form-group">
+    <%= label :movie, :overview, 'Overview', class: 'col-form-label' %>
+    <%= text_area :movie, :overview, value: @movie_details[:overview], class: 'form-control', rows: 5 %>
+  </div>
+  
   <br/>
   <%= submit_tag 'Save Changes', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', movies_path, class: 'btn btn-secondary' %>

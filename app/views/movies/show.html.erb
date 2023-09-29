@@ -1,24 +1,117 @@
-<!--  app/views/movies/show.html.erb -->
-<h2>Details about <em><%= @movie.title %></em></h2>
+<!-- app/views/movies/show.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details</title>
+  <style>
+    /* Add CSS styles here */
+    .movie-details {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px; /* Add more space from the top */
+    }
 
-<ul id="details">
-  <li>
-    Rating:
-    <%= @movie.rating %>
-  </li>
-  <li>
-    Released on:
-    <%= @movie.release_date.strftime("%B %d, %Y") %>
-  </li>
-</ul>
+    .movie-title {
+      font-size: 4rem; /* Increase the font size */
+      font-weight: bold; /* Make it bold */
+      margin-bottom: 20px; /* Add more space below the title */
+    }
 
-<h3>Description:</h3>
-<p id="description">
-  <%= @movie.description %>
-</p>
+    .details-label {
+      font-size: 16px; /* Make the "Details about" text smaller */
+      display: block; /* Display it as a block element */
+      opacity: 0.7;
+      
+    }
 
-<div class="row">
-  <%= link_to 'Edit', edit_movie_path(@movie), class: 'btn btn-primary col-2' %>
-  <%= link_to 'Delete', movie_path(@movie), 'data-method': 'delete', 'data-confirm': 'Are you sure?', class: 'btn btn-danger col-2' %>
-  <%= link_to 'Back to movie list', movies_path, class: 'btn btn-primary col-2' %>
-</div>
+    .movie-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .info-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-label {
+      font-weight: bold;
+    }
+
+    .overview-title {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    .overview-text {
+      line-height: 1.5;
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      margin: 0 10px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background-color: #f0f0f0; /* Light gray background for secondary button */
+      color: #333; /* Dark gray text color */
+      border: 1px solid #ccc; /* Add a subtle border */
+    }
+  </style>
+</head>
+<body>
+  <div class="movie-details">
+    <span class="details-label">Details about</span>
+    <h2 class="movie-title"><%= @movie.title %></h2>
+
+    <div class="movie-info">
+      <div class="info-item">
+        <span class="info-label">Rating:</span>
+        <span class="info-value"><%= @movie.rating %></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Released on:</span>
+        <span class="info-value"><%= @movie.release_date.strftime("%B %d, %Y") %></span>
+      </div>
+      <!-- Additional movie details -->
+    </div>
+
+    <!-- Overview from TMDb -->
+    <h3 class="overview-title">Overview:</h3>
+    <p class="overview-text"><%= @movie.overview %></p>
+  </div>
+
+
+  <!-- Action buttons -->
+  <div class="action-buttons">
+    <%= link_to 'Edit', edit_movie_path(@movie), class: 'btn btn-primary' %>
+    <%= link_to 'Delete', movie_path(@movie), 'data-method': 'delete', 'data-confirm': 'Are you sure?', class: 'btn btn-danger' %>
+    <%= link_to 'Back to movie list', movies_path, class: 'btn btn-secondary' %>
+
+  </div>
+</body>
+</html>

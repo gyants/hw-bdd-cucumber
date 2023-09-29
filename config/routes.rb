@@ -4,8 +4,12 @@ Rottenpotatoes::Application.routes.draw do
     sessions: 'moviegoers/sessions',
     registrations: 'moviegoers/registrations'
   }
-  resources :movies
+  
   # map '/' to be a redirect to '/movies'
   root :to => redirect('/movies')
   post '/movies/search_tmdb' => 'movies#search_tmdb', :as => 'search_tmdb'
+  get '/movies/select', to: 'movies#select_movie', as: 'select_movie'
+
+  resources :movies
+  
 end

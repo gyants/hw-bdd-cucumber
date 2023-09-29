@@ -1,23 +1,74 @@
-<!--  This file is app/views/movies/index.html.erb -->
+<!-- This file is app/views/movies/index.html.erb -->
 <h2>All Movies</h2>
 
-<%#  Part 2: Start here... %>
+<style>
+  /* Unchecked (white button) */
+  .toggle-button {
+    background-color: white;
+    color: black;  /* Setting the text color to black for better contrast */
+    border: 2px solid #ddd;  /* Adding a light gray border for differentiation */
+    padding: 4px 8px;
+    width: 4rem;
+    font-size: 0.85em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.1s, border-color 0.1s;  /* Snappy transition for both background and border */
+  }
+
+  /* Checked (Bootstrap btn-success color) */
+  .toggle-button.checked {
+    background-color: #007BFF;  /* Green color when checked */
+    color: white;
+    border-color: #007BFF;  /* Adjusting border color for checked state */
+  }
+  #ratings_submit {
+    padding: 3px 6px;  /* Adjust this value for desired button size */
+    vertical-align: middle;
+    background-color: white;
+    border-color: black;
+  }
+</style>
+
+
+
+
+
+<!-- Part 2: Start here... -->
 
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
   <%= hidden_field_tag 'sort_by', @sort_by %>
-  Include:
-  <% @all_ratings.each do |rating| %>
-    <div class="form-check  form-check-inline">
-      <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
-      <%= check_box_tag "ratings[#{rating}]", '1', (@ratings_to_show_hash.include?(rating)),
-        class: 'form-check-input' %>
-    </div>
-  <% end %>
-  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
+  <div style="margin-bottom: 10px;"> <!-- Add margin to create space below the form -->
+    Include:
+    <% @all_ratings.each do |rating| %>
+      <div class="form-check form-check-inline" style="margin-right: 10px;">
+        <%= button_tag rating, 
+              type: 'button', 
+              class: "toggle-button #{'checked' if @ratings_to_show_hash.include?(rating)}",
+              data: { rating: rating, checked: @ratings_to_show_hash.include?(rating) ? 'true' : 'false' }
+        %>
+        <!-- Hidden checkbox to actually submit the value -->
+        <%= check_box_tag "ratings[#{rating}]", '1', (@ratings_to_show_hash.include?(rating)), style: "display: none;" %>
+      </div>
+    <% end %>
+    
+    <%= button_tag type: 'submit', id: 'ratings_submit', class: 'btn btn-primary', title: 'Refresh' do %>
+      <svg width="24px" height="24px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+        <path d="M25 38c-7.2 0-13-5.8-13-13 0-3.2 1.2-6.2 3.3-8.6l1.5 1.3C15 19.7 14 22.3 14 25c0 6.1 4.9 11 11 11 1.6 0 3.1-.3 4.6-1l.8 1.8c-1.7.8-3.5 1.2-5.4 1.2z" />
+        <path d="M34.7 33.7l-1.5-1.3c1.8-2 2.8-4.6 2.8-7.3 0-6.1-4.9-11-11-11-1.6 0-3.1.3-4.6 1l-.8-1.8c1.7-.8 3.5-1.2 5.4-1.2 7.2 0 13 5.8 13 13 0 3.1-1.2 6.2-3.3 8.6z" />
+        <path d="M18 24h-2v-6h-6v-2h8z" />
+        <path d="M40 34h-8v-8h2v6h6z"/>
+      </svg>
+    <% end %>
+    
+    
+    
+  </div>
 <% end %>
 
+
 <table class="table table-striped col-md-12" id="movies">
-  <thead>
+  <!-- Add margin-bottom to create space below the table -->
+  <thead style="margin-bottom: 10px;">
     <tr>
       <th>
         <%= link_to 'Movie Title', movies_path({sort_by: 'title', ratings: @ratings_to_show_hash}),
@@ -42,7 +93,8 @@
           <%= movie.rating %>
         </td>
         <td>
-          <%= movie.release_date %>
+          <%= movie.release_date.strftime("%d %B %Y") %>
+          <!-- Use strftime to format the date -->
         </td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>
@@ -54,13 +106,33 @@
 <%= link_to 'Add new movie', new_movie_path, class: 'btn btn-primary' %>
 <br>
 <br>
-<h2>Search TMDb for a movie</h2>
-<%=form_tag search_tmdb_path do %>
-  <div class="form-check">
+
+<h2 style="margin-top: 20px;">Search TMDb for a movie</h2> <!-- Add margin-top to create space above this section -->
+<%= form_tag search_tmdb_path do %>
+  <div>
     <%= label :movie, :title, "Search Terms", class: 'col-form-label'%>
     <%= text_field :movie, :title, class: 'form-control' %>
     <br>
     <%= submit_tag 'Search TMDb', class: 'btn btn-primary' %>
   </div>
-<% end %>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).on('click', '.toggle-button', function() {
+    const $button = $(this);
+    const isChecked = $button.hasClass('checked');  // Use the class to determine if it's checked
+
+    if (isChecked) {
+      $button.removeClass('checked');
+    } else {
+      $button.addClass('checked');
+    }
+
+    // Update the hidden checkbox
+    const ratingText = $button.text();
+    $(`input[name='ratings[${ratingText}]']`).prop('checked', !isChecked);
+  });
+</script>
+
+  
+<% end %>
