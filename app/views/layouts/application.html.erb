@@ -4,44 +4,37 @@
   <head>
     <title>Rotten Potatoes!</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <%= stylesheet_link_tag 'application', 'media' => 'all' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
-    <style>
-      /* Custom CSS styles */
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-      .logout-button {
-        background-color: white;
-        color: #007bff; /* Blue color, you can adjust it */
-        border: 1px solid #007bff;
-      }
-      .logout-button:hover {
-        background-color: #007bff;
-        color: white;
-      }
-      /* Style the username in title case */
-      .username {
-        text-transform: capitalize;
-      }
-    </style>
   </head>
   <body>
     <%# These classes come from the Bootstrap CSS framework. %>
     <nav class="navbar navbar-expand-lg bg-primary text-white mb-3">
-      <h1 class="title">Rotten Potatoes!</h1>
-      <ul class="navbar-nav ml-auto">
-        <% if current_moviegoer %>
+      <h1 class="title flex-grow-1">Rotten Potatoes!</h1>
+
+      <!-- Add the search form in the navbar here -->
+      <% if current_moviegoer %> <!-- This checks if a user is logged in -->
+        <div class="search-container">
+            <%= form_tag search_tmdb_path, method: :post, class: "d-flex" do %>
+                <%= text_field_tag :search, nil, placeholder: 'Search Terms', class: 'form-control' %>
+                <%= submit_tag 'Search TMDb', class: 'btn btn-light py-1' %>
+            <% end %>
+        </div>
+    <% end %>
+
+      <ul class="navbar-nav ml-auto flex-grow-1 justify-content-end">
+      <% if current_moviegoer%>
+       <% if current_moviegoer.avatar_url.present?%>
           <li class="nav-item">
             <%= image_tag(current_moviegoer.avatar_url, class: 'user-avatar') %>
           </li>
+          <% end %>
+          <% if current_moviegoer.full_name%>
           <li class="nav-item">
             <span class="nav-link">Welcome, <span class="username"><%= current_moviegoer.full_name %></span></span>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= button_to 'Logout', destroy_moviegoer_session_path, class: 'btn logout-button', data: { turbo: "false" }, method: :delete %>
           </li>

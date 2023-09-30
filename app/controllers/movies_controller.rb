@@ -3,6 +3,7 @@ class MoviesController < ApplicationController
 
   def show
     id = params[:id] # retrieve movie ID from URI route
+    puts params.inspect
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
@@ -47,7 +48,10 @@ class MoviesController < ApplicationController
   end
 
   def search_tmdb
-    @query = params[:movie][:title] || params[:title]
+    @query = params[:search] || params[:title]
+
+
+
     @movie_results = TmdbService.search(@query)
   
     if @movie_results.blank?
@@ -104,7 +108,7 @@ class MoviesController < ApplicationController
     params[:sort_by] || session[:sort_by] || 'id'
   end
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date, :overview, :original_title, :vote_average)
+    params.require(:movie).permit(:title, :rating, :release_date, :overview)
   end
   
   

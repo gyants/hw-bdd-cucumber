@@ -1,38 +1,6 @@
 <!-- This file is app/views/movies/index.html.erb -->
 <h2>All Movies</h2>
 
-<style>
-  /* Unchecked (white button) */
-  .toggle-button {
-    background-color: white;
-    color: black;  /* Setting the text color to black for better contrast */
-    border: 2px solid #ddd;  /* Adding a light gray border for differentiation */
-    padding: 4px 8px;
-    width: 4rem;
-    font-size: 0.85em;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.1s, border-color 0.1s;  /* Snappy transition for both background and border */
-  }
-
-  /* Checked (Bootstrap btn-success color) */
-  .toggle-button.checked {
-    background-color: #007BFF;  /* Green color when checked */
-    color: white;
-    border-color: #007BFF;  /* Adjusting border color for checked state */
-  }
-  #ratings_submit {
-    padding: 3px 6px;  /* Adjust this value for desired button size */
-    vertical-align: middle;
-    background-color: white;
-    border-color: black;
-  }
-</style>
-
-
-
-
-
 <!-- Part 2: Start here... -->
 
 <%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
@@ -107,15 +75,6 @@
 <br>
 <br>
 
-<h2 style="margin-top: 20px;">Search TMDb for a movie</h2> <!-- Add margin-top to create space above this section -->
-<%= form_tag search_tmdb_path do %>
-  <div>
-    <%= label :movie, :title, "Search Terms", class: 'col-form-label'%>
-    <%= text_field :movie, :title, class: 'form-control' %>
-    <br>
-    <%= submit_tag 'Search TMDb', class: 'btn btn-primary' %>
-  </div>
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).on('click', '.toggle-button', function() {
@@ -135,4 +94,4 @@
 </script>
 
   
-<% end %>
+

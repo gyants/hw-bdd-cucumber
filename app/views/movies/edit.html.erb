@@ -9,15 +9,10 @@
   
   <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>
   <%= date_select :movie, :release_date, default: @movie.release_date, class: 'form-control col-2 d-inline' %>
-  
+  </br>
   <%= label :movie, :overview, 'Overview', class: 'col-form-label' %>
   <%= text_area :movie, :overview, value: @movie.overview, class: 'form-control', rows: 5 %>
   
-  <%= label :movie, :original_title, 'Original Title', class: 'col-form-label' %>
-  <%= text_field :movie, :original_title, value: @movie.original_title, class: 'form-control' %>
-  
-  <%= label :movie, :vote_average, 'Vote Average', class: 'col-form-label' %>
-  <%= text_field :movie, :vote_average, value: @movie.vote_average, class: 'form-control' %>
 
   <br/>
   <%= submit_tag 'Update Movie Info', class: 'btn btn-primary' %>

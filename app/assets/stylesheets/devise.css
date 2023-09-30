@@ -1,0 +1,160 @@
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.field {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: left;
+    /* left-align the label and input */
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: #555;
+}
+
+.field input[type="email"],
+.field input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    /* smooth transitions for focus */
+}
+
+.field input[type="email"]:focus,
+.field input[type="password"]:focus {
+    outline: none;
+    border-color: #007BFF;
+    /* Matching the color of links for consistency */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    /* Light blue glow when input is focused */
+}
+
+.checkbox-field {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    gap: 10px;
+    /* align checkbox and label to the left */
+}
+
+
+.actions {
+    text-align: center;
+}
+
+.actions input[type="submit"] {
+    background: #007BFF;
+    /* Flat Bootstrap blue color */
+    border: none;
+    color: #fff;
+    padding: 12px 36px;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    /* Added box-shadow for a hover effect */
+    display: inline-block;
+}
+
+.actions input[type="submit"]:hover {
+    background-color: #0056b3;
+    /* A darker shade of blue for hover */
+    transform: translateY(-3px);
+    /* Slight upward movement for a "lift" effect */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* A subtle shadow for a lifted effect */
+}
+
+.actions input[type="submit"]:active {
+    background-color: #004080;
+    /* Even darker shade for active state */
+    transform: translateY(0);
+    box-shadow: none;
+    /* Removing the shadow on active/click */
+}
+
+.extra-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.extra-links a {
+    color: #007BFF;
+    /* Example color. You can adjust to fit your design. */
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+.devise-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-links {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    /* Provides spacing between the inline links */
+    margin-bottom: 15px;
+    /* Spacing between the text links and the OAuth button(s) */
+}
+
+.oauth-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* If there are multiple OAuth buttons, they'll be spaced apart */
+}
+
+.google-login-btn {
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    /* Ensures the button doesn't have a default background color */
+    border: none;
+    /* Remove default button border */
+    cursor: pointer;
+    padding: 10% 0;
+    /* This provides vertical spacing based on the width. Adjust as needed to fit the aspect ratio of your image. */
+    transition: opacity 0.3s;
+    /* Smooth transition for hover effect */
+}
+
+.google-login-btn:hover {
+    opacity: 0.9;
+    /* Slight fade on hover for interactivity */
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
